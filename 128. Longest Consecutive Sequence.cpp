@@ -34,12 +34,12 @@ public:
     int longestConsecutive(vector<int>& nums) {
         unordered_set<int> st(nums.begin(),nums.end());
         int longest = 0;
-        for(int i:st){
-            int streak = 1;
-            if(st.find(i-1)==st.end()){                
+        for(int i:st){            
+            if(st.find(i-1)==st.end()){
+                int streak=1;              
                 while(st.find(i+streak)!=st.end())streak++;
-            }
-            longest = max(longest,streak);
+                longest = max(longest,streak);
+            }            
         }
         return longest;
     }
