@@ -50,39 +50,27 @@ struct ListNode {
 class Solution {
 public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        vector<int> digits;
+        ListNode* dummynode = new ListNode(-1);
+        ListNode* temp = dummynode;
+        ListNode* t1 = l1;
+        ListNode* t2 = l2;
         int carry = 0;
+        while(t1!=NULL||t2!=NULL){
+            int sum = carry;
+            if(t1) sum+=t1->val;
+            if(t2) sum+=t2->val;
 
-        while (l1 != NULL || l2 != NULL) {
-            int a = 0;
-            int b = 0;
+            
+            temp->next = new ListNode(sum%10);
+            carry = sum/10;
+            temp = temp->next;
 
-            if (l1 != NULL) {
-                a = l1->val;
-                l1 = l1->next;
-            }
-
-            if (l2 != NULL) {
-                b = l2->val;
-                l2 = l2->next;
-            }
-
-            int sum = a + b + carry;
-            digits.push_back(sum % 10);
-            carry = sum / 10;
+            if(t1!=NULL) t1= t1->next;
+            if(t2!=NULL) t2= t2->next;
         }
-
-        if (carry > 0) {
-            digits.push_back(carry);
+        if(carry){
+            temp->next = new ListNode(carry);
         }
-
-        ListNode* head = new ListNode(digits[0]);
-        ListNode* current = head;
-        for (int i = 1; i < digits.size(); i++) {
-            current->next = new ListNode(digits[i]);
-            current = current->next;
-        }
-
-        return head;
+        return dummynode->next;
     }
 };
