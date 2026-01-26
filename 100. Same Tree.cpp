@@ -1,35 +1,35 @@
 /*
-110. Balanced Binary Tree
+100. Same Tree
 
-Given a binary tree, determine if it is
+Given the roots of two binary trees p and q, write a function to check if they are the same or not.
 
-.
+Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.
 
  
 
 Example 1:
 
-Input: root = [3,9,20,null,null,15,7]
+Input: p = [1,2,3], q = [1,2,3]
 Output: true
 
 Example 2:
 
-Input: root = [1,2,2,3,3,null,null,4,4]
+Input: p = [1,2], q = [1,null,2]
 Output: false
 
 Example 3:
 
-Input: root = []
-Output: true
+Input: p = [1,2,1], q = [1,1,2]
+Output: false
 
  
 
 Constraints:
 
-    The number of nodes in the tree is in the range [0, 5000].
+    The number of nodes in both trees is in the range [0, 100].
     -104 <= Node.val <= 104
-*/
 
+ */
 
 /**
  * Definition for a binary tree node.
@@ -42,8 +42,9 @@ Constraints:
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-#include <cmath>
+#include <algorithm>
 using namespace std;
+
 struct TreeNode {
       int val;
       TreeNode *left;
@@ -54,15 +55,8 @@ struct TreeNode {
   };
 class Solution {
 public:
-    int check(TreeNode* root){
-        if(root==NULL) return 0;
-        int lh = check(root->left);
-        int rh = check(root->right);
-        if(lh==-1||rh==-1) return -1;
-        if(abs(lh-rh)>1) return -1;
-        return max(lh, rh)+1;    
-    }
-    bool isBalanced(TreeNode* root) {
-        return check(root)==-1? false:true;
+    bool isSameTree(TreeNode* p, TreeNode* q) {
+        if(p==NULL||q==NULL) return p==q;
+        return (p->val==q->val)&&isSameTree(p->left, q->left)&&isSameTree(p->right, q->right);
     }
 };
