@@ -1,0 +1,60 @@
+/*
+1781. Sum of Beauty of All Substrings
+
+The beauty of a string is the difference in frequencies between the most frequent and least frequent characters.
+
+    For example, the beauty of "abaacc" is 3 - 1 = 2.
+
+Given a string s, return the sum of beauty of all of its substrings.
+
+ 
+
+Example 1:
+
+Input: s = "aabcb"
+Output: 5
+Explanation: The substrings with non-zero beauty are ["aab","aabc","aabcb","abcb","bcb"], each with beauty equal to 1.
+
+Example 2:
+
+Input: s = "aabcbaa"
+Output: 17
+
+ 
+
+Constraints:
+
+    1 <= s.length <= 500
+    s consists of only lowercase English letters.
+
+ */
+#include <vector>
+#include <string>
+#include <climits>
+using namespace std;
+class Solution {
+public:
+    int beautySum(string s) {
+        int sum = 0;
+        int n = s.size();
+
+        for (int i = 0; i < n; ++i) {
+            int freq[26] = {0};  
+
+            for (int j = i; j < n; ++j) {
+                freq[s[j] - 'a']++;
+
+                int max_f = 0, min_f = INT_MAX;
+                for (int f:freq) {
+                    if (f> 0) {
+                        max_f = max(max_f, f);
+                        min_f = min(min_f, f);
+                    }
+                }
+                sum += (max_f - min_f);
+            }
+        }
+
+        return sum;
+    }
+};
