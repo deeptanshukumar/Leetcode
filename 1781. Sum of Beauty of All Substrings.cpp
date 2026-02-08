@@ -31,30 +31,26 @@ Constraints:
 #include <vector>
 #include <string>
 #include <climits>
+#include <unordered_map>
 using namespace std;
 class Solution {
 public:
     int beautySum(string s) {
         int sum = 0;
         int n = s.size();
-
-        for (int i = 0; i < n; ++i) {
-            int freq[26] = {0};  
-
-            for (int j = i; j < n; ++j) {
-                freq[s[j] - 'a']++;
-
-                int max_f = 0, min_f = INT_MAX;
-                for (int f:freq) {
-                    if (f> 0) {
-                        max_f = max(max_f, f);
-                        min_f = min(min_f, f);
-                    }
+        for(int i=0;i<n;i++){
+            unordered_map<int, int>freq;
+            for(int j=i;j<=n-1;j++){
+                freq[s[j]-'a']++;
+                int minf = INT_MAX;
+                int maxf = 0;
+                for(auto i:freq){
+                    minf = min(minf, i.second);
+                    maxf = max(maxf, i.second);
                 }
-                sum += (max_f - min_f);
+                sum+=maxf-minf;
             }
         }
-
         return sum;
     }
 };
